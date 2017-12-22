@@ -2,37 +2,40 @@
 #include "DualMotorMovementDriver.h"
 #include "PinConfiguration.h"
 
+
+Logger *DualMotorMovementDriver::logger = Logger::createLogger("DualMotorMovementDriver");
+
 void DualMotorMovementDriver::forward() {
-    logger->logAppend("Forward")->newLine();
+    logger->newLine()->logAppend("Forward");
     leftWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::backward() {
-    logger->logAppend("Backward")->newLine();
+    logger->newLine()->logAppend("Backward");
     leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::turnLeft() {
-    logger->logAppend("Left")->newLine();
+    logger->newLine()->logAppend("Left");
     leftWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::turnRight() {
-    logger->logAppend("Right")->newLine();
+    logger->newLine()->logAppend("Right");
     leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::stop() {
-    logger->logAppend("Stop")->newLine();
+    logger->newLine()->logAppend("Stop");
     leftWheel();
     rightWheel();
 }
 
-DualMotorMovementDriver::DualMotorMovementDriver(Logger *logger) : logger(logger) {
+DualMotorMovementDriver::DualMotorMovementDriver() {
     pinMode(MotorShieldPins::motor1Enable, OUTPUT);
     pinMode(MotorShieldPins::motor1Input1, OUTPUT);
     pinMode(MotorShieldPins::motor1Input2, OUTPUT);

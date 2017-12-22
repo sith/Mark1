@@ -56,7 +56,7 @@ public:
     static const byte motor1Input2 = D8;
     static const byte motor2Enable = D5_PWM;
     static const byte motor2Input1 = D4;
-    static const byte motor2Input2 = D7;
+    static const byte motor2Input2 = D14_ANALOG;
 };
 
 /*Servo motor SG90*/

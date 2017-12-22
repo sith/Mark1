@@ -5,9 +5,15 @@
 #ifndef MARK1_DISTANCESENSOR_H
 #define MARK1_DISTANCESENSOR_H
 
+#include <Arduino.h>
+
 class DistanceSensor {
 public:
-    virtual int getDistance()=0;
+    virtual long getDistance(int course)=0;
+
+    long getDistance() {
+        return getDistance(0);
+    }
 };
 
 #endif //MARK1_DISTANCESENSOR_H

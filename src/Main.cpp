@@ -1,23 +1,21 @@
 #include <Arduino.h>
 #include "ModeManager.h"
-#include "IRModeManager.cpp"
-#include "SerialLogger.cpp"
+#include "IRModeManager.h"
 #include "DualMotorMovementDriver.h"
+#include "USDistanceSensor.h"
 
 ModeManager *modeManager;
-Logger *logger;
-
 
 void setup() {
     Serial.begin(9600);
-    logger = new SerialLogger();
     IRSensor sensor;
-    DistanceSensor *distanceDriver = NULL;
-    MovementDriver *movementDriver = new DualMotorMovementDriver(logger);
-    modeManager = new IRModeManager(sensor, logger, distanceDriver, movementDriver);
+    DistanceSensor *distanceDriver = new USDistanceSensor();
+    MovementDriver *movementDriver = new DualMotorMovementDriver();
+    modeManager = new IRModeManager(sensor, distanceDriver, movementDriver);
 }
 
 void loop() {
+    Logger::nextCycle();
     Mode *mode = modeManager->getMode();
     mode->process();
 }

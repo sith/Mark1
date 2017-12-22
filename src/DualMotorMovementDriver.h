@@ -6,7 +6,7 @@
 #define MARK1_DUALMOTORMOVEMENTDRIVER_H
 
 #include "MovementDriver.h"
-#include "Logger.h"
+#include "logger/Logger.h"
 #include <Arduino.h>
 
 #define STOP 0x0
@@ -15,9 +15,10 @@
 
 
 class DualMotorMovementDriver : public MovementDriver {
-    Logger *logger;
-
 private:
+
+    static Logger *logger;
+
     void leftWheel(byte speedMode = SPEED_MODE_ZERO, byte direction = STOP);
 
     void rightWheel(byte speedMode = SPEED_MODE_ZERO, byte direction = STOP);
@@ -26,7 +27,7 @@ private:
 
 public:
 
-    explicit DualMotorMovementDriver(Logger *logger);
+    DualMotorMovementDriver();
 
     void forward() override;
 

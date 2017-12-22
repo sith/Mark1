@@ -17,6 +17,6 @@ const char *TestMode::getName() {
     return "Test";
 }
 
-TestMode::TestMode(Logger *logger) : logger(logger) {
-    DualMotorMovementDriver movementDriver(logger);
-}
+TestMode::TestMode() {
+        DualMotorMovementDriver movementDriver();
+}     

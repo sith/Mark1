@@ -7,13 +7,13 @@
 
 
 #include "Mode.h"
-#include "Logger.h"
+#include "logger/Logger.h"
 
 class TestMode : public Mode {
 private:
-    Logger *logger;
+
 public:
-    TestMode(Logger *logger);
+    TestMode();
 
     const void process() override;
 
