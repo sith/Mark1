@@ -19,6 +19,12 @@ private:
 
     static Logger *logger;
 
+    bool forwardFlag;
+    bool backwardFlag;
+    bool turnLeftFlag;
+    bool turnRightFlag;
+    bool stopFlag;
+
     void leftWheel(byte speedMode = SPEED_MODE_ZERO, byte direction = STOP);
 
     void rightWheel(byte speedMode = SPEED_MODE_ZERO, byte direction = STOP);
@@ -38,6 +44,16 @@ public:
     void turnRight() override;
 
     void stop() override;
+
+    bool isForward() override;
+
+    bool isBackward() override;
+
+    bool isTurnLeft() override;
+
+    bool isTurnRight() override;
+
+    bool isStop() override;
 };
 
 

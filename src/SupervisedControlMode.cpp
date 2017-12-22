@@ -9,10 +9,12 @@ SupervisedControlMode::SupervisedControlMode(MovementDriver *movementDriver, IRS
           distanceSensor(distanceSensor) {
 }
 
-    const void SupervisedControlMode::process() {
-        bool obstacleUpFront = checkForObstacles(distanceSensor->getDistance());
-    bool obstacleOnTheLeft = checkForObstacles(distanceSensor->getDistance(-30));
-    bool obstacleOnTheRight = checkForObstacles(distanceSensor->getDistance(30));
+const void SupervisedControlMode::process() {
+
+    checkForObstacles(distanceSensor->getDistance());
+    checkForObstacles(distanceSensor->getDistance(-30));
+    checkForObstacles(distanceSensor->getDistance(30));
+
     IRCode code = irSensor->readCode();
     switch (code) {
         case IRCode::NUMBER_2:
@@ -40,13 +42,12 @@ SupervisedControlMode::SupervisedControlMode(MovementDriver *movementDriver, IRS
     }
 }
 
-bool SupervisedControlMode::checkForObstacles(long forwardObstacleDistance) const {
-    if (forwardObstacleDistance < MIN_FORWARD_DISTANCE) {
+void SupervisedControlMode::checkForObstacles(long forwardObstacleDistance) const {
+    if (forwardObstacleDistance < MIN_FORWARD_DISTANCE && movementDriver->isForward()) {
         LOG->newLine()->logAppend("Obstacle found. Distance: ")->logAppend(forwardObstacleDistance);
         movementDriver->stop();
-        return true;
     }
-    return false;
+
 }
 
 const char *SupervisedControlMode::getName() {

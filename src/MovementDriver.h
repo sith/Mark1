@@ -21,6 +21,18 @@ public:
     virtual void turnRight()=0;
 
     virtual void stop()=0;
+
+
+    virtual bool isForward()=0;
+
+    virtual bool isBackward()=0;
+
+    virtual bool isTurnLeft()=0;
+
+    virtual bool isTurnRight()=0;
+
+    virtual bool isStop()=0;
+
 };
 
 #endif //MARK1_MOVEMENTDRIVER_H

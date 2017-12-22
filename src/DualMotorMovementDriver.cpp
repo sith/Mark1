@@ -3,34 +3,46 @@
 #include "PinConfiguration.h"
 
 
+bool DualMotorMovementDriver::forwardFlag = false;
+bool DualMotorMovementDriver::backwardFlag = false;
+bool DualMotorMovementDriver::turnLeftFlag = false;
+bool DualMotorMovementDriver::turnRightFlag = false;
+bool DualMotorMovementDriver::stopFlag = true;
+
+
 Logger *DualMotorMovementDriver::logger = Logger::createLogger("DualMotorMovementDriver");
 
 void DualMotorMovementDriver::forward() {
     logger->newLine()->logAppend("Forward");
+    forwardFlag = true;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::backward() {
     logger->newLine()->logAppend("Backward");
+    backwardFlag = true;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::turnLeft() {
     logger->newLine()->logAppend("Left");
+    turnLeftFlag = true;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::turnRight() {
     logger->newLine()->logAppend("Right");
+    turnRightFlag = true;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::stop() {
     logger->newLine()->logAppend("Stop");
+    stopFlag = true;
     leftWheel();
     rightWheel();
 }
@@ -88,4 +100,24 @@ void DualMotorMovementDriver::runMotor(byte speedMode,
 
     digitalWrite(input1Pin, dirA);
     digitalWrite(input2Pin, dirB);
+}
+
+bool DualMotorMovementDriver::isForward() {
+    return forwardFlag;
+}
+
+bool DualMotorMovementDriver::isBackward() {
+    return backwardFlag;
+}
+
+bool DualMotorMovementDriver::isTurnLeft() {
+    return turnLeftFlag;
+}
+
+bool DualMotorMovementDriver::isTurnRight() {
+    return turnRightFlag;
+}
+
+bool DualMotorMovementDriver::isStop() {
+    return stopFlag;
 }

@@ -12,7 +12,7 @@
 #include "DistanceSensor.h"
 
 
-static const int MIN_FORWARD_DISTANCE = 10;
+static const int MIN_FORWARD_DISTANCE = 14;
 
 class SupervisedControlMode : public Mode {
 private:
@@ -22,7 +22,7 @@ private:
     DistanceSensor *distanceSensor;
     IRSensor *irSensor;
 
-    bool checkForObstacles(long forwardObstacleDistance) const;
+    void checkForObstacles(long forwardObstacleDistance) const;
 
 public:
     SupervisedControlMode(MovementDriver *movementDriver, IRSensor *irSensor, DistanceSensor *distanceSensor);
