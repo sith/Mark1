@@ -2,47 +2,39 @@
 #include "DualMotorMovementDriver.h"
 #include "PinConfiguration.h"
 
-
-bool DualMotorMovementDriver::forwardFlag = false;
-bool DualMotorMovementDriver::backwardFlag = false;
-bool DualMotorMovementDriver::turnLeftFlag = false;
-bool DualMotorMovementDriver::turnRightFlag = false;
-bool DualMotorMovementDriver::stopFlag = true;
-
-
 Logger *DualMotorMovementDriver::logger = Logger::createLogger("DualMotorMovementDriver");
 
 void DualMotorMovementDriver::forward() {
     logger->newLine()->logAppend("Forward");
-    forwardFlag = true;
+    movementDriverState = FORWARD_;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::backward() {
     logger->newLine()->logAppend("Backward");
-    backwardFlag = true;
+    movementDriverState = BACKWARD_;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::turnLeft() {
     logger->newLine()->logAppend("Left");
-    turnLeftFlag = true;
+    movementDriverState = TURN_LEFT_;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::turnRight() {
     logger->newLine()->logAppend("Right");
-    turnRightFlag = true;
+    movementDriverState = TURN_RIGHT_;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::stop() {
     logger->newLine()->logAppend("Stop");
-    stopFlag = true;
+    movementDriverState = STOP_;
     leftWheel();
     rightWheel();
 }
@@ -54,6 +46,7 @@ DualMotorMovementDriver::DualMotorMovementDriver() {
     pinMode(MotorShieldPins::motor2Enable, OUTPUT);
     pinMode(MotorShieldPins::motor2Input1, OUTPUT);
     pinMode(MotorShieldPins::motor2Input2, OUTPUT);
+    movementDriverState = STOP_;
 }
 
 void DualMotorMovementDriver::leftWheel(byte speedMode = SPEED_MODE_ZERO, byte direction = STOP) {
@@ -102,22 +95,6 @@ void DualMotorMovementDriver::runMotor(byte speedMode,
     digitalWrite(input2Pin, dirB);
 }
 
-bool DualMotorMovementDriver::isForward() {
-    return forwardFlag;
-}
-
-bool DualMotorMovementDriver::isBackward() {
-    return backwardFlag;
-}
-
-bool DualMotorMovementDriver::isTurnLeft() {
-    return turnLeftFlag;
-}
-
-bool DualMotorMovementDriver::isTurnRight() {
-    return turnRightFlag;
-}
-
-bool DualMotorMovementDriver::isStop() {
-    return stopFlag;
+MovementDriverState DualMotorMovementDriver::getMovementDriverState() {
+    return movementDriverState;
 }

@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include "ModeManager.h"
 #include "IRModeManager.h"
-#include "DualMotorMovementDriver.h"
-#include "USDistanceSensor.h"
+#include "drivers/DualMotorMovementDriver.h"
+#include "sensors/USDistanceSensor.h"
 
 ModeManager *modeManager;
 

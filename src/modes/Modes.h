@@ -5,7 +5,7 @@
 #ifndef MARK1_MODES_H
 #define MARK1_MODES_H
 
-#include "Mode.h"
+#include "modes/Mode.h"
 
 class CallibrationMode : public Mode {
 

@@ -10,7 +10,7 @@ static const int MAX_COURSE = 170;
 
 #include <Servo.h>
 #include "logger/Logger.h"
-#include "DistanceSensor.h"
+#include "sensors/DistanceSensor.h"
 #include "SR04.h"
 #include "PinConfiguration.h"
 

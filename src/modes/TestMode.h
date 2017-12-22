@@ -6,7 +6,7 @@
 #define MARK1_TESTMODE_H
 
 
-#include "Mode.h"
+#include "modes/Mode.h"
 #include "logger/Logger.h"
 
 class TestMode : public Mode {

@@ -5,7 +5,7 @@
 #ifndef MARK1_MODESELECTOR_H
 #define MARK1_MODESELECTOR_H
 
-#include "Mode.h"
+#include "modes/Mode.h"
 
 class ModeManager {
 public:

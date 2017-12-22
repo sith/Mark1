@@ -6,10 +6,10 @@
 #define MARK1_IRMODEMANAGER_H
 
 #include "ModeManager.h"
-#include "IRSensor.h"
-#include "FreeRunMode.cpp"
-#include "SupervisedControlMode.h"
-#include "TestMode.h"
+#include "sensors/IRSensor.h"
+#include "modes/FreeRunMode.h"
+#include "modes/SupervisedControlMode.h"
+#include "modes/TestMode.h"
 
 class IRModeManager : public ModeManager {
 private:

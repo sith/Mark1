@@ -54,7 +54,7 @@ Mode *IRModeManager::getMode() {
                 break;
             case IRCode::NUMBER_5:
                 irSensor.consumeLastCode();
-//                    setCurrentMode(newCode, new FreeRunMode(distanceSensor, movementDriver));
+                setCurrentMode(newCode, new FreeRunMode(distanceSensor, movementDriver));
                 break;
             case IRCode::NUMBER_0:
                 irSensor.consumeLastCode();

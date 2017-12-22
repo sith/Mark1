@@ -5,7 +5,7 @@
 #ifndef MARK1_DUALMOTORMOVEMENTDRIVER_H
 #define MARK1_DUALMOTORMOVEMENTDRIVER_H
 
-#include "MovementDriver.h"
+#include "drivers/MovementDriver.h"
 #include "logger/Logger.h"
 #include <Arduino.h>
 
@@ -14,16 +14,14 @@
 #define MOVE_BACKWARD 0x2
 
 
+
+
 class DualMotorMovementDriver : public MovementDriver {
 private:
 
     static Logger *logger;
 
-    bool forwardFlag;
-    bool backwardFlag;
-    bool turnLeftFlag;
-    bool turnRightFlag;
-    bool stopFlag;
+    MovementDriverState movementDriverState;
 
     void leftWheel(byte speedMode = SPEED_MODE_ZERO, byte direction = STOP);
 
@@ -45,15 +43,8 @@ public:
 
     void stop() override;
 
-    bool isForward() override;
+    MovementDriverState getMovementDriverState() override;
 
-    bool isBackward() override;
-
-    bool isTurnLeft() override;
-
-    bool isTurnRight() override;
-
-    bool isStop() override;
 };
 
 

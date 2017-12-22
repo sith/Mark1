@@ -6,10 +6,10 @@
 #define MARK1_SUPERVISEDCONTROLMODE_H
 
 #include <HardwareSerial.h>
-#include "Mode.h"
-#include "MovementDriver.h"
-#include "IRSensor.h"
-#include "DistanceSensor.h"
+#include "modes/Mode.h"
+#include "drivers/MovementDriver.h"
+#include "sensors/IRSensor.h"
+#include "sensors/DistanceSensor.h"
 
 
 static const int MIN_FORWARD_DISTANCE = 14;

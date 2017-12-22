@@ -43,7 +43,7 @@ const void SupervisedControlMode::process() {
 }
 
 void SupervisedControlMode::checkForObstacles(long forwardObstacleDistance) const {
-    if (forwardObstacleDistance < MIN_FORWARD_DISTANCE && movementDriver->isForward()) {
+    if (forwardObstacleDistance < MIN_FORWARD_DISTANCE && movementDriver->getMovementDriverState() == FORWARD_) {
         LOG->newLine()->logAppend("Obstacle found. Distance: ")->logAppend(forwardObstacleDistance);
         movementDriver->stop();
     }

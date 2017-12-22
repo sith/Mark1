@@ -10,6 +10,15 @@
 #define SPEED_MODE_MEDIUM 128
 #define SPEED_MODE_FAST 255
 
+
+enum MovementDriverState {
+    FORWARD_,
+    BACKWARD_,
+    TURN_LEFT_,
+    TURN_RIGHT_,
+    STOP_
+};
+
 class MovementDriver {
 public:
     virtual void forward()=0;
@@ -23,15 +32,8 @@ public:
     virtual void stop()=0;
 
 
-    virtual bool isForward()=0;
+    virtual MovementDriverState getMovementDriverState()=0;
 
-    virtual bool isBackward()=0;
-
-    virtual bool isTurnLeft()=0;
-
-    virtual bool isTurnRight()=0;
-
-    virtual bool isStop()=0;
 
 };
 
