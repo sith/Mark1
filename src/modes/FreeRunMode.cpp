@@ -19,8 +19,11 @@ const void FreeRunMode::process() {
         movementDriver->forward();
     }
     LOG->newLine()->logAppend("Obstacle found. Distance: ")->logAppend(forwardDistanceToObstacle);
-
-    movementDriver->turnRight();
+    if (random(0, 100) > 60) {
+        movementDriver->turnRight();
+    } else {
+        movementDriver->turnLeft();
+    }
 }
 
 const void FreeRunMode::stop() {
