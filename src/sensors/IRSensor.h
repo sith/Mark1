@@ -8,6 +8,7 @@
 #include <Arduino.h>
 #include "IRremote.h"
 #include "logger/Logger.h"
+#include "Sensor.h"
 
 #define READINGS_SIZE 5
 enum IRCode {
@@ -36,7 +37,7 @@ enum IRCode {
     NONE, //22
 };
 
-class IRSensor {
+class IRSensor : public Sensor<IRCode> {
 private:
     static Logger *LOG;
     IRrecv irrecv;
@@ -52,6 +53,8 @@ public:
     IRCode readCode();
 
     void consumeLastCode();
+
+    IRCode readSensorData();
 
 };
 

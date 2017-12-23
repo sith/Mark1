@@ -6,14 +6,16 @@
 #define MARK1_DISTANCESENSOR_H
 
 #include <Arduino.h>
+#include "Sensor.h"
 
-class DistanceSensor {
+class DistanceSensor : public Sensor<long> {
 public:
     virtual long getDistance(int course)=0;
 
     long getDistance() {
         return getDistance(0);
     }
+
 };
 
 #endif //MARK1_DISTANCESENSOR_H

@@ -4,7 +4,6 @@
 
 #include "FreeRunMode.h"
 
-
 Logger *FreeRunMode::LOG = Logger::createLogger("FreeRunMode");
 
 const void FreeRunMode::process() {

@@ -1,22 +1,13 @@
 #include "IRSensor.h"
 #include "PinConfiguration.h"
+#include "Sensor.h"
 
 Logger *IRSensor::LOG = Logger::createLogger("IRSensor");
 
 IRCode IRSensor::readCode() {
 
-    IRCode code = NONE;
-    if (irrecv.decode(&results)) {
-        code = translateIR();
-        LOG->newLine()
-                ->logAppend("Read code: ")
-                ->logAppend(code)
-                ->logAppend(" current code")
-                ->logAppend(currentCode);
 
-        irrecv.resume();
-    }
-
+    IRCode code = readSensorData();
     if (code == NONE || code == REPEAT_) {
         return currentCode;
     }
@@ -85,4 +76,19 @@ IRCode IRSensor::translateIR() {
 
 IRSensor::IRSensor() : irrecv(IRReceiverPins::y) {
     IRSensor::irrecv.enableIRIn();
+}
+
+IRCode IRSensor::readSensorData() {
+    IRCode code = NONE;
+    if (irrecv.decode(&results)) {
+        code = translateIR();
+        LOG->newLine()
+                ->logAppend("Read code: ")
+                ->logAppend(code)
+                ->logAppend(" current code")
+                ->logAppend(currentCode);
+
+        irrecv.resume();
+    }
+    return code;
 }

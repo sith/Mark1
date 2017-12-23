@@ -40,3 +40,7 @@ int USDistanceSensor::calculateCourse(int course) {
     return newCourse;
 }
 
+long USDistanceSensor::readSensorData() {
+    return sr04.Distance();
+}
+

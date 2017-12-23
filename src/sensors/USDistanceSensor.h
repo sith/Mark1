@@ -31,6 +31,9 @@ public:
     USDistanceSensor();
 
     long getDistance(int course) override;
+
+    long readSensorData() override;
+
 };
 
 

@@ -6,6 +6,7 @@
 #define MARK1_IRMODEMANAGER_H
 
 #include "ModeManager.h"
+#include "sensors/Sensor.h"
 #include "sensors/IRSensor.h"
 #include "modes/FreeRunMode.h"
 #include "modes/SupervisedControlMode.h"
