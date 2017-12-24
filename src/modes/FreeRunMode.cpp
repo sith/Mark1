@@ -10,20 +10,22 @@ Logger *FreeRunMode::LOG = Logger::createLogger("FreeRunMode");
 const void FreeRunMode::process() {
 
     long forwardDistanceToObstacle = distanceSensor->getDistance();
-/*
     long leftDistanceToObstacle = distanceSensor->getDistance(-30);
     long rightDistanceToObstacle = distanceSensor->getDistance(30);
-*/
 
-    if (forwardDistanceToObstacle > MIN_DISTANCE) {
+    if (forwardDistanceToObstacle > MIN_DISTANCE &&
+        leftDistanceToObstacle > MIN_DISTANCE &&
+        rightDistanceToObstacle > MIN_DISTANCE) {
         movementDriver->forward();
+        return;
     }
-    LOG->newLine()->logAppend("Obstacle found. Distance: ")->logAppend(forwardDistanceToObstacle);
-    if (random(0, 100) > 60) {
+
+    if (leftDistanceToObstacle < MIN_DISTANCE) {
         movementDriver->turnRight();
-    } else {
+    } else if (rightDistanceToObstacle < MIN_DISTANCE) {
         movementDriver->turnLeft();
     }
+    delay(250);
 }
 
 const void FreeRunMode::stop() {

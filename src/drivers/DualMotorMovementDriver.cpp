@@ -5,10 +5,10 @@
 Logger *DualMotorMovementDriver::logger = Logger::createLogger("DualMotorMovementDriver");
 
 void DualMotorMovementDriver::forward() {
-    logger->newLine()->logAppend("Forward");
+    logger->newLine()->logAppend("Forward, speed: ")->logAppend(SPEED_MODE_FAST);
     movementDriverState = FORWARD_;
-    leftWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
-    rightWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
+    leftWheel(SPEED_MODE_FAST, MOVE_FORWARD);
+    rightWheel(SPEED_MODE_FAST, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::backward() {
@@ -21,15 +21,15 @@ void DualMotorMovementDriver::backward() {
 void DualMotorMovementDriver::turnLeft() {
     logger->newLine()->logAppend("Left");
     movementDriverState = TURN_LEFT_;
-    leftWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
-    rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
+    leftWheel(SPEED_MODE_SLOW, MOVE_BACKWARD);
+    rightWheel(SPEED_MODE_SLOW, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::turnRight() {
     logger->newLine()->logAppend("Right");
     movementDriverState = TURN_RIGHT_;
-    leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
-    rightWheel(SPEED_MODE_MEDIUM, MOVE_FORWARD);
+    leftWheel(SPEED_MODE_SLOW, MOVE_FORWARD);
+    rightWheel(SPEED_MODE_SLOW, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::stop() {

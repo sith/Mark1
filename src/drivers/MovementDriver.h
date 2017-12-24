@@ -8,7 +8,7 @@
 #define SPEED_MODE_ZERO 0
 #define SPEED_MODE_SLOW 64
 #define SPEED_MODE_MEDIUM 128
-#define SPEED_MODE_FAST 255
+#define SPEED_MODE_FAST 250
 
 
 enum MovementDriverState {
