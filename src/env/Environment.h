@@ -7,15 +7,13 @@
 
 #include "../sensors/DistanceSensorListener.h"
 
-#include <StandardCplusplus.h>
-#include <list>
 #include <sensors/IRSensorListener.h>
 #include <drivers/MovementDriver.h>
 #include <sensors/DistanceSensor.h>
 
 class Environment {
-    static std::list<DistanceSensorListener *> distanceSensorListeners;
-    static std::list<IRSensorListener *> irSensorListeners;
+    static DistanceSensorListener &distanceSensorListeners;
+    static IRSensorListener &irSensorListeners;
     static MovementDriver *movementDriver;
     static DistanceSensor *distanceSensor;
     static IRSensor *irSensor;

@@ -1,3 +1,5 @@
+#ifndef UNIT_TEST
+
 #include <Arduino.h>
 #include "DualMotorMovementDriver.h"
 #include "PinConfiguration.h"
@@ -98,3 +100,5 @@ void DualMotorMovementDriver::runMotor(byte speedMode,
 MovementDriverState DualMotorMovementDriver::getMovementDriverState() {
     return movementDriverState;
 }
+
+#endif

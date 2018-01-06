@@ -5,24 +5,21 @@
 #ifndef MARK1_PROCESS_H
 #define MARK1_PROCESS_H
 
-#include <StandardCplusplus.h>
-#include <list>
-
 namespace framework {
     class Process {
     private:
-        std::list<Process *> childProcesses;
+        Process *childProcesses;
 
-        void addProcess(Process *process);
+        void addChildProcess(Process *process);
 
-        void deleteProcess(Process *process);
+        void deleteChildProcess(Process *process);
 
         void runChildProcesses();
 
         virtual void runCurrentProcess()=0;
 
     public:
-         void run();
+        void run();
 
     };
 

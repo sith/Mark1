@@ -5,7 +5,6 @@
 #ifndef MARK1_DISTANCESENSOR_H
 #define MARK1_DISTANCESENSOR_H
 
-#include <Arduino.h>
 #include "Sensor.h"
 
 class DistanceSensor : public Sensor<long> {

@@ -4,9 +4,6 @@
 
 #include "Environment.h"
 
-std::list<DistanceSensorListener *> Environment::distanceSensorListeners = std::list<DistanceSensorListener *>();
-
-std::list<IRSensorListener *> Environment::irSensorListeners = std::list<IRSensorListener *>();
 
 void Environment::setMovementDriver(MovementDriver *movementDriver) {
     Environment::movementDriver = movementDriver;
@@ -33,10 +30,8 @@ IRSensor *Environment::getIrSensor() {
 }
 
 void Environment::registorDistanceSensorListener(DistanceSensorListener *distanceSensorListener) {
-    distanceSensorListeners.insert(distanceSensorListeners.end(), distanceSensorListener);
 
 }
 
 void Environment::registorIRSensorListener(IRSensorListener *irSensorListener) {
-    irSensorListeners.insert(irSensorListeners.end(), irSensorListener);
 }

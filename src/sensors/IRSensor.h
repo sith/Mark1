@@ -2,10 +2,10 @@
 // Created by Oleksandra Baukh on 12/16/17.
 //
 
+
 #ifndef MARK1_IRSENSOR_H
 #define MARK1_IRSENSOR_H
 
-#include <Arduino.h>
 #include "IRremote.h"
 #include "logger/Logger.h"
 #include "Sensor.h"

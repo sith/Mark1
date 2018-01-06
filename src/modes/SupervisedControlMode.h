@@ -5,7 +5,6 @@
 #ifndef MARK1_SUPERVISEDCONTROLMODE_H
 #define MARK1_SUPERVISEDCONTROLMODE_H
 
-#include <HardwareSerial.h>
 #include "modes/Mode.h"
 #include "drivers/MovementDriver.h"
 #include "sensors/IRSensor.h"

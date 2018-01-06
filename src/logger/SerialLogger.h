@@ -6,7 +6,6 @@
 #define MARK1_SERIALLOGGER_H
 
 
-#include <HardwareSerial.h>
 #include "Logger.h"
 
 

@@ -1,3 +1,5 @@
+#ifndef UNIT_TEST
+
 #include <Arduino.h>
 #include <process/MainProcess.h>
 #include <env/Environment.h>
@@ -32,3 +34,5 @@ void loop() {
     Mode *mode = modeManager->getMode();
     mode->process();
 }
+
+#endif

@@ -2,6 +2,8 @@
 // Created by Oleksandra Baukh on 12/22/17.
 //
 
+
+#include <Arduino.h>
 #include "FreeRunMode.h"
 
 Logger *FreeRunMode::LOG = Logger::createLogger("FreeRunMode");

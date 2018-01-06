@@ -2,7 +2,6 @@
 // Created by Oleksandra Baukh on 12/20/17.
 //
 
-#include <WString.h>
 #include "Logger.h"
 #include "SerialLogger.h"
 
