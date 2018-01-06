@@ -49,7 +49,7 @@ DualMotorMovementDriver::DualMotorMovementDriver() {
     movementDriverState = STOP_;
 }
 
-void DualMotorMovementDriver::leftWheel(byte speedMode = SPEED_MODE_ZERO, byte direction = STOP) {
+void DualMotorMovementDriver::leftWheel(byte speedMode, byte direction) {
     if (direction == STOP) {
         digitalWrite(MotorShieldPins::motor1Enable, LOW);
     } else {
@@ -61,7 +61,7 @@ void DualMotorMovementDriver::leftWheel(byte speedMode = SPEED_MODE_ZERO, byte d
     }
 }
 
-void DualMotorMovementDriver::rightWheel(byte speedMode = SPEED_MODE_ZERO, byte direction = STOP) {
+void DualMotorMovementDriver::rightWheel(byte speedMode, byte direction) {
     if (direction == STOP) {
         digitalWrite(MotorShieldPins::motor2Enable, LOW);
     } else {
