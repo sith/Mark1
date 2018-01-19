@@ -1,45 +1,45 @@
 #include <Arduino.h>
+#include <os/environment/Environment.h>
 #include "DualMotorMovementDriver.h"
 #include "PinConfiguration.h"
 
-Logger *DualMotorMovementDriver::logger = Logger::createLogger("DualMotorMovementDriver");
 
 void DualMotorMovementDriver::forward() {
-    logger->newLine()->logAppend("Forward, speed: ")->logAppend(SPEED_MODE_FAST);
+    logger.newLine()->logAppend("Forward, speed: ")->logAppend(SPEED_MODE_FAST);
     movementDriverState = FORWARD_;
     leftWheel(SPEED_MODE_FAST, MOVE_FORWARD);
     rightWheel(SPEED_MODE_FAST, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::backward() {
-    logger->newLine()->logAppend("Backward");
+    logger.newLine()->logAppend("Backward");
     movementDriverState = BACKWARD_;
     leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
     rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::turnLeft() {
-    logger->newLine()->logAppend("Left");
+    logger.newLine()->logAppend("Left");
     movementDriverState = TURN_LEFT_;
     leftWheel(SPEED_MODE_SLOW, MOVE_BACKWARD);
     rightWheel(SPEED_MODE_SLOW, MOVE_FORWARD);
 }
 
 void DualMotorMovementDriver::turnRight() {
-    logger->newLine()->logAppend("Right");
+    logger.newLine()->logAppend("Right");
     movementDriverState = TURN_RIGHT_;
     leftWheel(SPEED_MODE_SLOW, MOVE_FORWARD);
     rightWheel(SPEED_MODE_SLOW, MOVE_BACKWARD);
 }
 
 void DualMotorMovementDriver::stop() {
-    logger->newLine()->logAppend("Stop");
+    logger.newLine()->logAppend("Stop");
     movementDriverState = STOP_;
     leftWheel();
     rightWheel();
 }
 
-DualMotorMovementDriver::DualMotorMovementDriver() {
+DualMotorMovementDriver::DualMotorMovementDriver() : logger(Environment::getEnvironment().getLoggerFactory()->createLogger("DualMotorMovementDriver")) {
     pinMode(MotorShieldPins::motor1Enable, OUTPUT);
     pinMode(MotorShieldPins::motor1Input1, OUTPUT);
     pinMode(MotorShieldPins::motor1Input2, OUTPUT);

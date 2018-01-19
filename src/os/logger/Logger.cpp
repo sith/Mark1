@@ -2,13 +2,12 @@
 // Created by Oleksandra Baukh on 12/20/17.
 //
 
-#include <WString.h>
 #include "Logger.h"
-#include "SerialLogger.h"
+#include "logger/SerialLogger.h"
 
-unsigned long Logger::cycle = 0;
+/*unsigned long Logger::cycle = 0;
 
-Logger *Logger::createLogger(char *name) {
+Logger *Logger::createLogger(const char &name) {
     return new SerialLogger(name);
 }
 
@@ -18,4 +17,4 @@ void Logger::nextCycle() {
 
 unsigned long Logger::getCycle() {
     return cycle;
-}
+}*/

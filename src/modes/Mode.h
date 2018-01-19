@@ -6,12 +6,17 @@
 #define MARK1_MODE_H
 
 class Mode {
+    ModeName &modeName;
 public:
+    Mode(ModeName modeName);
+
     virtual const void process()=0;
 
     virtual const void stop()=0;
 
-    virtual const char *getName()=0;
+    ModeName &getModeName() const;
+
+    void setModeName(ModeName &modeName);
 };
 
 class NoopMode : public Mode {
@@ -19,9 +24,7 @@ public:
     const void process() override {
     }
 
-    const char *getName() override {
-        return "NoOP";
-    }
+    NoopMode() : Mode(ModeName::NONE) {};
 
     const void stop() override {
     }

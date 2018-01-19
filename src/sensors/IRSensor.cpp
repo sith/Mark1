@@ -1,36 +1,19 @@
+#include <os/environment/Environment.h>
 #include "IRSensor.h"
 #include "PinConfiguration.h"
 
-Logger *IRSensor::LOG = Logger::createLogger("IRSensor");
+
 
 IRCode IRSensor::readCode() {
 
-    IRCode code = NONE;
+    IRCode code = IRCode ::NONE;
     if (irrecv.decode(&results)) {
         code = translateIR();
-        LOG->newLine()
-                ->logAppend("Read code: ")
-                ->logAppend(code)
-                ->logAppend(" current code")
-                ->logAppend(currentCode);
-
         irrecv.resume();
     }
-
-    if (code == NONE || code == REPEAT_) {
-        return currentCode;
-    }
-
-    LOG->newLine()->logAppend("Change current code ")->logAppend(currentCode)->logAppend(" to ")->logAppend(code);
-
-    currentCode = code;
-    return currentCode;
+    return code;
 }
 
-void IRSensor::consumeLastCode() {
-    LOG->newLine()->logAppend("Consume ")->logAppend(currentCode);
-    currentCode = NONE;
-}
 
 IRCode IRSensor::translateIR() {
     switch (results.value) {
@@ -83,6 +66,6 @@ IRCode IRSensor::translateIR() {
     }
 }
 
-IRSensor::IRSensor() : irrecv(IRReceiverPins::y) {
+IRSensor::IRSensor() : irrecv(IRReceiverPins::y), LOG(Environment::getEnvironment().getLoggerFactory()->createLogger("IRSensor")) {
     IRSensor::irrecv.enableIRIn();
 }

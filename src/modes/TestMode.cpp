@@ -13,10 +13,6 @@ const void TestMode::stop() {
     return;
 }
 
-const char *TestMode::getName() {
-    return "Test";
-}
-
-TestMode::TestMode() {
-        DualMotorMovementDriver movementDriver();
+TestMode::TestMode() : Mode(ModeName::TEST) {
+    DualMotorMovementDriver movementDriver();
 }     

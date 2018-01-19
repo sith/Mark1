@@ -6,7 +6,7 @@
 #define MARK1_DUALMOTORMOVEMENTDRIVER_H
 
 #include "drivers/MovementDriver.h"
-#include "logger/Logger.h"
+#include "os/logger/Logger.h"
 #include <Arduino.h>
 
 #define STOP 0x0
@@ -19,7 +19,7 @@
 class DualMotorMovementDriver : public MovementDriver {
 private:
 
-    static Logger *logger;
+    Logger &logger;
 
     MovementDriverState movementDriverState;
 

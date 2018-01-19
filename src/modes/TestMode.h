@@ -6,8 +6,9 @@
 #define MARK1_TESTMODE_H
 
 
+#include <os/modes/ModeName.h>
 #include "modes/Mode.h"
-#include "logger/Logger.h"
+#include "os/logger/Logger.h"
 
 class TestMode : public Mode {
 private:
@@ -19,7 +20,6 @@ public:
 
     const void stop() override;
 
-    const char *getName() override;
 };
 
 

@@ -7,10 +7,10 @@
 
 #include <Arduino.h>
 #include "IRremote.h"
-#include "logger/Logger.h"
+#include "os/logger/Logger.h"
 
 #define READINGS_SIZE 5
-enum IRCode {
+enum class IRCode {
     POWER, //0
     FUNC_STOP, //1
     VOL_UP, //2
@@ -38,11 +38,9 @@ enum IRCode {
 
 class IRSensor {
 private:
-    static Logger *LOG;
+    Logger &LOG;
     IRrecv irrecv;
     decode_results results;
-
-    IRCode currentCode = NONE;
 
     IRCode translateIR();
 
@@ -50,9 +48,6 @@ public:
     IRSensor();
 
     IRCode readCode();
-
-    void consumeLastCode();
-
 };
 
 #endif //MARK1_IRSENSOR_H

@@ -7,8 +7,9 @@
 
 
 #include <drivers/MovementDriver.h>
-#include <logger/Logger.h>
+#include <os/logger/Logger.h>
 #include <sensors/DistanceSensor.h>
+#include <os/modes/ModeName.h>
 #include "Mode.h"
 
 #define MIN_DISTANCE 20
@@ -17,22 +18,15 @@
 class FreeRunMode : public Mode {
 
 private:
-
-    static Logger *LOG;
-
     DistanceSensor *distanceSensor;
     MovementDriver *movementDriver;
-
-
+    Logger &logger;
 public:
-    FreeRunMode(DistanceSensor *distanceSensor, MovementDriver *movementDriver);
+    FreeRunMode(DistanceSensor &distanceSensor, MovementDriver &movementDriver);
 
     const void process() override;
 
     const void stop() override;
-
-    const char *getName() override;
-
 };
 
 

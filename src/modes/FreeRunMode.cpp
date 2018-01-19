@@ -2,10 +2,8 @@
 // Created by Oleksandra Baukh on 12/22/17.
 //
 
+#include <os/environment/Environment.h>
 #include "FreeRunMode.h"
-
-
-Logger *FreeRunMode::LOG = Logger::createLogger("FreeRunMode");
 
 const void FreeRunMode::process() {
 
@@ -32,9 +30,6 @@ const void FreeRunMode::stop() {
     movementDriver->stop();
 }
 
-const char *FreeRunMode::getName() {
-    return "FreeRun";
-}
-
-FreeRunMode::FreeRunMode(DistanceSensor *distanceSensor, MovementDriver *movementDriver)
-        : distanceSensor(distanceSensor), movementDriver(movementDriver) {}
+FreeRunMode::FreeRunMode(DistanceSensor &distanceSensor, MovementDriver &movementDriver)
+        : Mode(ModeName::FREE_RUN), distanceSensor(&distanceSensor), movementDriver(&movementDriver),
+          logger(Environment::getEnvironment().getLoggerFactory()->createLogger("FreeRunMode")) {}
