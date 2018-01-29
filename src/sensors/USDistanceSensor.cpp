@@ -2,7 +2,7 @@
 // Created by Oleksandra Baukh on 12/17/17.
 //
 
-#include <os/environment/Environment.h>
+#include <environment/Environment.h>
 #include "USDistanceSensor.h"
 
 
@@ -24,7 +24,7 @@ USDistanceSensor::USDistanceSensor() : LOG(
     servo.write(currentCourse);
     delay(250);
     standardDelay();
-    LOG.newLine()->logAppend("Servo motor is reset");
+    LOG->newLine()->logAppend("Servo motor is reset");
 
 }
 

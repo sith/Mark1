@@ -6,14 +6,19 @@
 #define MARK1_IRCONTROLLER_H
 
 
-#include <os/controller/Controller.h>
+#include <controller/Controller.h>
 #include <sensors/IRSensor.h>
 
 class IRController : public Controller {
     IRSensor irSensor;
-    Mode *currentMode = nullptr;
+    Logger *logger;
+    ModeName currentModeName = ModeName::NONE;
+
+    void notifyNewMode(ModeName name);
+
 public:
-    IRController(const IRSensor &irSensor);
+
+    IRController(IRSensor *irSensor);
 
     void readControllerCommand() override;
 };

@@ -1,12 +1,11 @@
-#include <os/environment/Environment.h>
+#include <environment/Environment.h>
 #include "IRSensor.h"
 #include "PinConfiguration.h"
 
 
-
 IRCode IRSensor::readCode() {
 
-    IRCode code = IRCode ::NONE;
+    IRCode code = IRCode::NONE;
     if (irrecv.decode(&results)) {
         code = translateIR();
         irrecv.resume();
@@ -66,6 +65,7 @@ IRCode IRSensor::translateIR() {
     }
 }
 
-IRSensor::IRSensor() : irrecv(IRReceiverPins::y), LOG(Environment::getEnvironment().getLoggerFactory()->createLogger("IRSensor")) {
+IRSensor::IRSensor() : irrecv(IRReceiverPins::y),
+                       logger(Environment::getEnvironment().getLoggerFactory()->createLogger("IRSensor")) {
     IRSensor::irrecv.enableIRIn();
 }

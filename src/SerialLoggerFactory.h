@@ -6,11 +6,11 @@
 #define MARK1_SERIALLOGGERFACTORY_H
 
 
-#include "os/logger/LoggerFactory.h"
+#include <logger/LoggerFactory.h>
 
 class SerialLoggerFactory : public LoggerFactory {
 public:
-    Logger &createLogger(const char *name) override;
+    Logger *createLogger(const char *name) override;
 };
 
 

@@ -2,6 +2,7 @@
 // Created by Oleksandra Baukh on 1/17/18.
 //
 
+#include <environment/Environment.h>
 #include "IRController.h"
 
 void IRController::readControllerCommand() {
@@ -9,12 +10,13 @@ void IRController::readControllerCommand() {
     IRCode code = irSensor.readCode();
 
     if (code == IRCode::FUNC_STOP) {
+        logger->newLine()->logAppend("Stop mode: ")->logAppend(Mode::getModeNameString(currentModeName));
         modeListener->onModeChange(ModeName::NONE);
-        currentMode = nullptr;
+        currentModeName = ModeName::NONE;
         return;
     }
 
-    if (currentMode != nullptr) {
+    if (currentModeName != ModeName::NONE) {
         return;
     }
 
@@ -32,7 +34,7 @@ void IRController::readControllerCommand() {
 //            setCurrentMode(newCode, new FreeRunMode(distanceSensor, movementDriver));
             break;
         case IRCode::NUMBER_0:
-            modeListener->onModeChange(ModeName::TEST);
+            notifyNewMode(ModeName::TEST);
             break;
         default:
             break;
@@ -40,4 +42,12 @@ void IRController::readControllerCommand() {
 
 }
 
-IRController::IRController(const IRSensor &irSensor) : irSensor(irSensor) {}
+IRController::IRController( IRSensor *irSensor) : irSensor(*irSensor),
+                                                       logger(Environment::getEnvironment().getLoggerFactory()->createLogger(
+                                                               "IRController")) {}
+
+void IRController::notifyNewMode(ModeName name) {
+//    logger->newLine()->logAppend("New mode: ")->logAppend(Mode::getModeNameString(name));
+    currentModeName = name;
+    modeListener->onModeChange(name);
+}

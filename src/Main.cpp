@@ -1,31 +1,38 @@
 #include <Arduino.h>
-#include <modes/ModeManager.h>
-#include <os/logger/Logger.h>
-#include <os/environment/Environment.h>
+
+#include <logger/Logger.h>
+#include <environment/Environment.h>
 #include <controller/IRController.h>
+#include <modes/ModeManager.h>
+#include "time/ArduinoClock.h"
 #include "SerialLoggerFactory.h"
 
-
 ModeManager *modeManager;
+IRController *irController;
 
 void setup() {
+
     Serial.begin(9600);
 
-    Environment environment = *new Environment;
+    Environment::getEnvironment().setLoggerFactory(new SerialLoggerFactory);
 
-    IRSensor &irSensor = *new IRSensor;
     modeManager = new ModeManager;
 
-    Controller &controller = *new IRController(irSensor);
-    controller.addModeListener(*modeManager);
+    IRSensor *irSensor = new IRSensor;
+    irController = new IRController(irSensor);
+    Environment::getEnvironment().setController(irController);
+    ArduinoClock *clock = new ArduinoClock;
+    Environment::getEnvironment().setClock(clock);
+    Timer *timer = new Timer(*clock);
+    Environment::getEnvironment().setTimer(timer);
+    Environment::getEnvironment().getCycle().getListeners()->add(timer);
+    irController->addModeListener(*modeManager);
 
-    environment.setController(controller);
-    environment.setLoggerFactory(*new SerialLoggerFactory);
-
-    Environment::setEnvironment(environment);
+    Environment::getEnvironment().getLoggerFactory()->createLogger("Main")->newLine()->logAppend("App is started");
 }
 
 void loop() {
-    Mode *mode = modeManager->getCurrentMode();
-    mode->process();
+    Environment::getEnvironment().getCycle().next();
+    irController->readControllerCommand();
+    modeManager->getCurrentMode().process();
 }

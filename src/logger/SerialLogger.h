@@ -7,7 +7,7 @@
 
 
 #include <HardwareSerial.h>
-#include "os/logger/Logger.h"
+#include <logger/Logger.h>
 
 
 class SerialLogger : public Logger {
@@ -18,6 +18,8 @@ public:
     SerialLogger(const char *name);
 
     Logger *logAppend(int number) override;
+
+    Logger *logAppend(long number) override;
 
     Logger *logAppend(const char *c) override;
 

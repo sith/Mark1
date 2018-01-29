@@ -9,7 +9,7 @@ static const int MIN_COURSE = 10;
 static const int MAX_COURSE = 170;
 
 #include <Servo.h>
-#include "os/logger/Logger.h"
+#include <logger/Logger.h>
 #include "sensors/DistanceSensor.h"
 #include "SR04.h"
 #include "PinConfiguration.h"
@@ -17,7 +17,7 @@ static const int MAX_COURSE = 170;
 class USDistanceSensor : public DistanceSensor {
 private:
 
-    Logger &LOG;
+    Logger *LOG;
 
     Servo servo;
     int currentCourse = COURSE_OFFSET;
