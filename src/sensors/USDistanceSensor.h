@@ -17,7 +17,7 @@ static const int MAX_COURSE = 170;
 class USDistanceSensor : public DistanceSensor {
 private:
 
-    Logger *LOG;
+    Logger *logger;
 
     Servo servo;
     int currentCourse = COURSE_OFFSET;
@@ -29,6 +29,8 @@ private:
 
 public:
     USDistanceSensor();
+
+    virtual ~USDistanceSensor();
 
     long getDistance(int course) override;
 };

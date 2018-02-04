@@ -18,13 +18,14 @@ long USDistanceSensor::getDistance(int course) {
     return distance;
 }
 
-USDistanceSensor::USDistanceSensor() : LOG(
-        Environment::getEnvironment().getLoggerFactory()->createLogger("USDistanceSensor")) {
+USDistanceSensor::USDistanceSensor() : logger(
+        LoggerFactory::newLogger("USDistanceSensor")) {
+
     servo.attach(ServoMotorPins::pulse);
     servo.write(currentCourse);
     delay(250);
     standardDelay();
-    LOG->newLine()->logAppend("Servo motor is reset");
+    logger->newLine()->logAppend("Servo motor is reset");
 
 }
 
@@ -39,5 +40,9 @@ int USDistanceSensor::calculateCourse(int course) {
         return MIN_COURSE;
     }
     return newCourse;
+}
+
+USDistanceSensor::~USDistanceSensor() {
+    delete logger;
 }
 

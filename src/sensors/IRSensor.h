@@ -47,6 +47,8 @@ private:
 public:
     IRSensor();
 
+    virtual ~IRSensor();
+
     IRCode readCode();
 };
 

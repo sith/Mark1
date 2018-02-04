@@ -66,6 +66,10 @@ IRCode IRSensor::translateIR() {
 }
 
 IRSensor::IRSensor() : irrecv(IRReceiverPins::y),
-                       logger(Environment::getEnvironment().getLoggerFactory()->createLogger("IRSensor")) {
+                       logger(LoggerFactory::newLogger("IRSensor")) {
     IRSensor::irrecv.enableIRIn();
+}
+
+IRSensor::~IRSensor() {
+    delete logger;
 }

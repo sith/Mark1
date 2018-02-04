@@ -39,7 +39,7 @@ void DualMotorMovementDriver::stop() {
     rightWheel();
 }
 
-DualMotorMovementDriver::DualMotorMovementDriver() : logger(Environment::getEnvironment().getLoggerFactory()->createLogger("DualMotorMovementDriver")) {
+DualMotorMovementDriver::DualMotorMovementDriver() : logger(LoggerFactory::newLogger("DualMotorMovementDriver")) {
     pinMode(MotorShieldPins::motor1Enable, OUTPUT);
     pinMode(MotorShieldPins::motor1Input1, OUTPUT);
     pinMode(MotorShieldPins::motor1Input2, OUTPUT);
@@ -97,4 +97,8 @@ void DualMotorMovementDriver::runMotor(byte speedMode,
 
 MovementDriverState DualMotorMovementDriver::getMovementDriverState() {
     return movementDriverState;
+}
+
+DualMotorMovementDriver::~DualMotorMovementDriver() {
+    delete logger;
 }

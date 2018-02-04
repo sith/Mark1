@@ -12,15 +12,12 @@
 class IRController : public Controller {
     IRSensor irSensor;
     Logger *logger;
-    ModeName currentModeName = ModeName::NONE;
-
-    void notifyNewMode(ModeName name);
 
 public:
 
     IRController(IRSensor *irSensor);
 
-    void readControllerCommand() override;
+    Command readControllerCommand() override;
 };
 
 

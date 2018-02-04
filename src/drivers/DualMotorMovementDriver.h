@@ -31,6 +31,8 @@ private:
 
 public:
 
+    virtual ~DualMotorMovementDriver();
+
     DualMotorMovementDriver();
 
     void forward() override;
