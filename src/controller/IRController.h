@@ -18,6 +18,8 @@ public:
     IRController(IRSensor *irSensor);
 
     Command readControllerCommand() override;
+
+    Command selectCommand(ModeName name);
 };
 
 

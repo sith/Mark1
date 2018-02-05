@@ -3,7 +3,8 @@
 #include <logger/Logger.h>
 #include <environment/Environment.h>
 #include <controller/IRController.h>
-#include <modes/ModeManager.h>
+#include <drivers/DualMotorMovementDriver.h>
+#include <sensors/USObstacleSensor.h>
 #include "time/ArduinoClock.h"
 #include "SerialLoggerFactory.h"
 
@@ -16,6 +17,8 @@ void setup() {
     auto *irSensor = new IRSensor;
     Environment::getEnvironment().setClock(new ArduinoClock);
     Environment::getEnvironment().setController(new IRController(irSensor));
+    Environment::getEnvironment().setMotorDriver(new DualMotorMovementDriver);
+    Environment::getEnvironment().setObstacleSensor(new USObstacleSensor);
 
     Environment::getEnvironment().init();
 

@@ -3,89 +3,28 @@
 #include "DualMotorMovementDriver.h"
 #include "PinConfiguration.h"
 
-
-void DualMotorMovementDriver::forward() {
-    logger->newLine()->logAppend("Forward, speed: ")->logAppend(SPEED_MODE_FAST);
-    movementDriverState = FORWARD_;
-    leftWheel(SPEED_MODE_FAST, MOVE_FORWARD);
-    rightWheel(SPEED_MODE_FAST, MOVE_FORWARD);
-}
-
-void DualMotorMovementDriver::backward() {
-    logger->newLine()->logAppend("Backward");
-    movementDriverState = BACKWARD_;
-    leftWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
-    rightWheel(SPEED_MODE_MEDIUM, MOVE_BACKWARD);
-}
-
-void DualMotorMovementDriver::turnLeft() {
-    logger->newLine()->logAppend("Left");
-    movementDriverState = TURN_LEFT_;
-    leftWheel(SPEED_MODE_SLOW, MOVE_BACKWARD);
-    rightWheel(SPEED_MODE_SLOW, MOVE_FORWARD);
-}
-
-void DualMotorMovementDriver::turnRight() {
-    logger->newLine()->logAppend("Right");
-    movementDriverState = TURN_RIGHT_;
-    leftWheel(SPEED_MODE_SLOW, MOVE_FORWARD);
-    rightWheel(SPEED_MODE_SLOW, MOVE_BACKWARD);
-}
-
-void DualMotorMovementDriver::stop() {
-    logger->newLine()->logAppend("Stop");
-    movementDriverState = STOP_;
-    leftWheel();
-    rightWheel();
-}
-
-DualMotorMovementDriver::DualMotorMovementDriver() : logger(LoggerFactory::newLogger("DualMotorMovementDriver")) {
+DualMotorMovementDriver::DualMotorMovementDriver() : logger(LoggerFactory::newLogger("MotorDriver")) {
     pinMode(MotorShieldPins::motor1Enable, OUTPUT);
     pinMode(MotorShieldPins::motor1Input1, OUTPUT);
     pinMode(MotorShieldPins::motor1Input2, OUTPUT);
     pinMode(MotorShieldPins::motor2Enable, OUTPUT);
     pinMode(MotorShieldPins::motor2Input1, OUTPUT);
     pinMode(MotorShieldPins::motor2Input2, OUTPUT);
-    movementDriverState = STOP_;
 }
 
-void DualMotorMovementDriver::leftWheel(byte speedMode, byte direction) {
-    if (direction == STOP) {
-        digitalWrite(MotorShieldPins::motor1Enable, LOW);
-    } else {
-        runMotor(speedMode,
-                 direction,
-                 MotorShieldPins::motor1Enable,
-                 MotorShieldPins::motor1Input1,
-                 MotorShieldPins::motor1Input2);
-    }
-}
-
-void DualMotorMovementDriver::rightWheel(byte speedMode, byte direction) {
-    if (direction == STOP) {
-        digitalWrite(MotorShieldPins::motor2Enable, LOW);
-    } else {
-        runMotor(speedMode,
-                 direction,
-                 MotorShieldPins::motor2Enable,
-                 MotorShieldPins::motor2Input2,
-                 MotorShieldPins::motor2Input1);
-    }
-}
-
-void DualMotorMovementDriver::runMotor(byte speedMode,
+void DualMotorMovementDriver::runMotor(byte speed,
                                        byte direction,
                                        byte enablePin,
                                        byte input1Pin,
                                        byte input2Pin) const {
-    digitalWrite(enablePin, speedMode);
+
+    digitalWrite(enablePin, speed);
 
     byte dirA;
     byte dirB;
     if (direction == MOVE_FORWARD) {
         dirA = HIGH;
         dirB = LOW;
-
     } else {
         dirA = LOW;
         dirB = HIGH;
@@ -95,10 +34,98 @@ void DualMotorMovementDriver::runMotor(byte speedMode,
     digitalWrite(input2Pin, dirB);
 }
 
-MovementDriverState DualMotorMovementDriver::getMovementDriverState() {
-    return movementDriverState;
+byte DualMotorMovementDriver::convertSpeedMode(const Speed &speed) const {
+    byte speedMode = SPEED_MODE_ZERO;
+    switch (speed) {
+        case LOW_SPEED:
+            speedMode = SPEED_MODE_SLOW;
+            break;
+        case MEDIUM_SPEED:
+            speedMode = SPEED_MODE_MEDIUM;
+            break;
+        case HIGH_SPEED:
+            speedMode = SPEED_MODE_FAST;
+            break;
+    }
+    return speedMode;
 }
 
 DualMotorMovementDriver::~DualMotorMovementDriver() {
     delete logger;
+}
+
+
+void DualMotorMovementDriver::execute(Direction direction, Speed speed) {
+    logger->newLine()->logAppend("Command received");
+    switch (direction) {
+        case FORWARD:
+            leftWheel(direction, speed);
+            rightWheel(direction, speed);
+            break;
+        case BACKWARD:
+            break;
+        case TURN_LEFT:
+            break;
+        case TURN_RIGHT:
+            break;
+    }
+}
+
+void DualMotorMovementDriver::leftWheel(Direction direction, Speed speedMode) {
+
+    byte speedFlag = convertSpeedMode(speedMode);
+    byte directionFlag = 0;
+    switch (direction) {
+        case FORWARD:
+            directionFlag = MOVE_FORWARD;
+            break;
+        case BACKWARD:
+            directionFlag = MOVE_BACKWARD;
+            break;
+        case TURN_LEFT:
+            directionFlag = MOVE_BACKWARD;
+            break;
+        case TURN_RIGHT:
+            directionFlag = MOVE_FORWARD;
+            break;
+    }
+
+    runMotor(speedFlag,
+             directionFlag,
+             MotorShieldPins::motor1Enable,
+             MotorShieldPins::motor1Input1,
+             MotorShieldPins::motor1Input2);
+
+}
+
+void DualMotorMovementDriver::rightWheel(Direction direction, Speed speedMode) {
+
+    byte speedFlag = convertSpeedMode(speedMode);
+    byte directionFlag = 0;
+    switch (direction) {
+        case FORWARD:
+            directionFlag = MOVE_FORWARD;
+            break;
+        case BACKWARD:
+            directionFlag = MOVE_BACKWARD;
+            break;
+        case TURN_LEFT:
+            directionFlag = MOVE_FORWARD;
+            break;
+        case TURN_RIGHT:
+            directionFlag = MOVE_BACKWARD;
+            break;
+    }
+
+
+    runMotor(speedFlag,
+             directionFlag,
+             MotorShieldPins::motor2Enable,
+             MotorShieldPins::motor2Input2,
+             MotorShieldPins::motor2Input1);
+}
+
+void DualMotorMovementDriver::stop() {
+    digitalWrite(MotorShieldPins::motor1Enable, SPEED_MODE_ZERO);
+    digitalWrite(MotorShieldPins::motor2Enable, SPEED_MODE_ZERO);
 }

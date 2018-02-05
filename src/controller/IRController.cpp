@@ -27,15 +27,19 @@ Command IRController::readControllerCommand() {
         case IRCode::NUMBER_4:
             break;
         case IRCode::NUMBER_5:
-            break;
-        case IRCode::NUMBER_0:
-            if (modeName == NONE) {
-                modeName = ModeName::TEST;
-                return Command::SELECT_MODE;
-            } else {
-                return Command::NONE;
-            }
+            return selectCommand(SUPERVISED);
+        case IRCode::NUMBER_6:
+            return selectCommand(TEST);
         default:
             break;
+    }
+}
+
+Command IRController::selectCommand(ModeName name) {
+    if (modeName == NONE) {
+        modeName = name;
+        return Command::SELECT_MODE;
+    } else {
+        return Command::NONE;
     }
 }
