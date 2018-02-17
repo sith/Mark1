@@ -17,22 +17,45 @@ Command IRController::readControllerCommand() {
         return Command::STOP_MODE;
     }
 
-    switch (code) {
-        case IRCode::NUMBER_1:
-            break;
-        case IRCode::NUMBER_2:
-            break;
-        case IRCode::NUMBER_3:
-            break;
-        case IRCode::NUMBER_4:
-            break;
-        case IRCode::NUMBER_5:
-            return selectCommand(SUPERVISED);
-        case IRCode::NUMBER_6:
-            return selectCommand(TEST);
-        default:
-            break;
+    if (modeName == NONE) {
+        switch (code) {
+            case IRCode::NUMBER_1:
+                break;
+            case IRCode::NUMBER_2:
+                break;
+            case IRCode::NUMBER_3:
+                break;
+            case IRCode::NUMBER_4:
+                break;
+            case IRCode::NUMBER_5:
+                return selectCommand(SUPERVISED);
+            case IRCode::NUMBER_6:
+                return selectCommand(TEST);
+            default:
+                break;
+        }
+    } else {
+        switch (code) {
+            case IRCode::NUMBER_1:
+                break;
+            case IRCode::NUMBER_2:
+                return Command::FORWARD;
+            case IRCode::NUMBER_3:
+                break;
+            case IRCode::NUMBER_4:
+                return Command::LEFT;
+            case IRCode::NUMBER_5:
+                return Command::STOP;
+            case IRCode::NUMBER_6:
+                return Command::RIGHT;
+            case IRCode::NUMBER_8:
+                return Command::BACKWARD;
+            default:
+                break;
+        }
     }
+
+    return Command::NONE;
 }
 
 Command IRController::selectCommand(ModeName name) {

@@ -56,19 +56,23 @@ DualMotorMovementDriver::~DualMotorMovementDriver() {
 
 
 void DualMotorMovementDriver::execute(Direction direction, Speed speed) {
-    logger->newLine()->logAppend("Command received");
     switch (direction) {
         case FORWARD:
-            leftWheel(direction, speed);
-            rightWheel(direction, speed);
+            logger->newLine()->logAppend("go forward");
             break;
         case BACKWARD:
+            logger->newLine()->logAppend("go backward");
             break;
         case TURN_LEFT:
+            logger->newLine()->logAppend("go left");
             break;
         case TURN_RIGHT:
+            logger->newLine()->logAppend("go right");
             break;
     }
+    leftWheel(direction, speed);
+    rightWheel(direction, speed);
+
 }
 
 void DualMotorMovementDriver::leftWheel(Direction direction, Speed speedMode) {
@@ -126,6 +130,7 @@ void DualMotorMovementDriver::rightWheel(Direction direction, Speed speedMode) {
 }
 
 void DualMotorMovementDriver::stop() {
+    logger->newLine()->logAppend("stop");
     digitalWrite(MotorShieldPins::motor1Enable, SPEED_MODE_ZERO);
     digitalWrite(MotorShieldPins::motor2Enable, SPEED_MODE_ZERO);
 }
