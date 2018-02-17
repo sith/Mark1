@@ -9,12 +9,18 @@
 #include <sensors/ObstacleSensor.h>
 #include <SR04.h>
 #include <PinConfiguration.h>
+#include <logger/Logger.h>
 
 class USObstacleSensor : public ObstacleSensor {
     SR04 sr04{DistanceModulePins::echo, DistanceModulePins::trig};
-    const byte allowedDistanceToObstacle = 10;
+    const long allowedDistanceToObstacle = 10;
+    Logger *logger;
 public:
     Obstacle read() override;
+
+    USObstacleSensor();
+
+    virtual ~USObstacleSensor();
 };
 
 
