@@ -24,7 +24,7 @@ Command IRController::readControllerCommand() {
             case IRCode::NUMBER_2:
                 break;
             case IRCode::NUMBER_3:
-                break;
+                return selectCommand(FREE_RUN);
             case IRCode::NUMBER_4:
                 break;
             case IRCode::NUMBER_5:
