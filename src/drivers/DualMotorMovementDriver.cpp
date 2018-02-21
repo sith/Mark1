@@ -37,13 +37,13 @@ void DualMotorMovementDriver::runMotor(byte speed,
 byte DualMotorMovementDriver::convertSpeedMode(const Speed &speed) const {
     byte speedMode = SPEED_MODE_ZERO;
     switch (speed) {
-        case LOW_SPEED:
+        case Speed::LOW_SPEED:
             speedMode = SPEED_MODE_SLOW;
             break;
-        case MEDIUM_SPEED:
+        case Speed::MEDIUM_SPEED:
             speedMode = SPEED_MODE_MEDIUM;
             break;
-        case HIGH_SPEED:
+        case Speed::HIGH_SPEED:
             speedMode = SPEED_MODE_FAST;
             break;
     }
@@ -54,25 +54,36 @@ DualMotorMovementDriver::~DualMotorMovementDriver() {
     delete logger;
 }
 
-
 void DualMotorMovementDriver::execute(Direction direction, Speed speed) {
-    switch (direction) {
-        case FORWARD:
-            logger->newLine()->logAppend("go forward");
-            break;
-        case BACKWARD:
-            logger->newLine()->logAppend("go backward");
-            break;
-        case TURN_LEFT:
-            logger->newLine()->logAppend("go left");
-            break;
-        case TURN_RIGHT:
-            logger->newLine()->logAppend("go right");
-            break;
+
+    if (direction == currentDirection && speed == currentSpeed) {
+        return;
     }
+
+    currentDirection = direction;
+    currentSpeed = speed;
+
+    logCommand(direction);
     leftWheel(direction, speed);
     rightWheel(direction, speed);
 
+}
+
+void DualMotorMovementDriver::logCommand(const Direction &direction) const {
+    switch (direction) {
+        case Direction::FORWARD:
+            logger->newLine()->logAppend("go forward");
+            break;
+        case Direction::BACKWARD:
+            logger->newLine()->logAppend("go backward");
+            break;
+        case Direction::TURN_LEFT:
+            logger->newLine()->logAppend("go left");
+            break;
+        case Direction::TURN_RIGHT:
+            logger->newLine()->logAppend("go right");
+            break;
+    }
 }
 
 void DualMotorMovementDriver::leftWheel(Direction direction, Speed speedMode) {
@@ -80,16 +91,16 @@ void DualMotorMovementDriver::leftWheel(Direction direction, Speed speedMode) {
     byte speedFlag = convertSpeedMode(speedMode);
     byte directionFlag = 0;
     switch (direction) {
-        case FORWARD:
+        case Direction::FORWARD:
             directionFlag = MOVE_FORWARD;
             break;
-        case BACKWARD:
+        case Direction::BACKWARD:
             directionFlag = MOVE_BACKWARD;
             break;
-        case TURN_LEFT:
+        case Direction::TURN_LEFT:
             directionFlag = MOVE_BACKWARD;
             break;
-        case TURN_RIGHT:
+        case Direction::TURN_RIGHT:
             directionFlag = MOVE_FORWARD;
             break;
     }
@@ -107,16 +118,16 @@ void DualMotorMovementDriver::rightWheel(Direction direction, Speed speedMode) {
     byte speedFlag = convertSpeedMode(speedMode);
     byte directionFlag = 0;
     switch (direction) {
-        case FORWARD:
+        case Direction::FORWARD:
             directionFlag = MOVE_FORWARD;
             break;
-        case BACKWARD:
+        case Direction::BACKWARD:
             directionFlag = MOVE_BACKWARD;
             break;
-        case TURN_LEFT:
+        case Direction::TURN_LEFT:
             directionFlag = MOVE_FORWARD;
             break;
-        case TURN_RIGHT:
+        case Direction::TURN_RIGHT:
             directionFlag = MOVE_BACKWARD;
             break;
     }
@@ -131,6 +142,8 @@ void DualMotorMovementDriver::rightWheel(Direction direction, Speed speedMode) {
 
 void DualMotorMovementDriver::stop() {
     logger->newLine()->logAppend("stop");
+    currentSpeed = Speed::NONE;
+    currentDirection = Direction::NONE;
     digitalWrite(MotorShieldPins::motor1Enable, SPEED_MODE_ZERO);
     digitalWrite(MotorShieldPins::motor2Enable, SPEED_MODE_ZERO);
 }
