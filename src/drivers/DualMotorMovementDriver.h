@@ -37,9 +37,11 @@ public:
 
     DualMotorMovementDriver();
 
-    void stop() override;
+protected:
+    void executeInternal(Direction direction, Speed speed) override;
 
-    void execute(Direction direction, Speed speed) override;
+    void stopInternal() override;
+
 };
 
 

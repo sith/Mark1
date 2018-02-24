@@ -54,21 +54,6 @@ DualMotorMovementDriver::~DualMotorMovementDriver() {
     delete logger;
 }
 
-void DualMotorMovementDriver::execute(Direction direction, Speed speed) {
-
-    if (direction == currentDirection && speed == currentSpeed) {
-        return;
-    }
-
-    currentDirection = direction;
-    currentSpeed = speed;
-
-    logCommand(direction);
-    leftWheel(direction, speed);
-    rightWheel(direction, speed);
-
-}
-
 void DualMotorMovementDriver::logCommand(const Direction &direction) const {
     switch (direction) {
         case Direction::FORWARD:
@@ -140,7 +125,20 @@ void DualMotorMovementDriver::rightWheel(Direction direction, Speed speedMode) {
              MotorShieldPins::motor2Input1);
 }
 
-void DualMotorMovementDriver::stop() {
+void DualMotorMovementDriver::executeInternal(Direction direction, Speed speed) {
+    if (direction == currentDirection && speed == currentSpeed) {
+        return;
+    }
+
+    currentDirection = direction;
+    currentSpeed = speed;
+
+    logCommand(direction);
+    leftWheel(direction, speed);
+    rightWheel(direction, speed);
+}
+
+void DualMotorMovementDriver::stopInternal() {
     logger->newLine()->logAppend("stop");
     currentSpeed = Speed::NONE;
     currentDirection = Direction::NONE;
