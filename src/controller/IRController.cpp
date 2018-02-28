@@ -15,18 +15,18 @@ Command IRController::readControllerCommand() {
         return Command::STOP_MODE;
     }
 
-    if (modeName == NONE) {
+    if (modeName == ModeName::NONE) {
         switch (code) {
             case IRCode::NUMBER_1:
                 break;
             case IRCode::NUMBER_2:
                 break;
             case IRCode::NUMBER_3:
-                return selectCommand(FREE_RUN);
+                return selectCommand(ModeName::FREE_RUN);
             case IRCode::NUMBER_4:
                 break;
             case IRCode::NUMBER_5:
-                return selectCommand(SUPERVISED);
+                return selectCommand(ModeName::SUPERVISED);
             default:
                 break;
         }
@@ -55,7 +55,7 @@ Command IRController::readControllerCommand() {
 }
 
 Command IRController::selectCommand(ModeName name) {
-    if (modeName == NONE) {
+    if (modeName == ModeName::NONE) {
         modeName = name;
         return Command::SELECT_MODE;
     } else {

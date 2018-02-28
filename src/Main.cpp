@@ -27,5 +27,4 @@ void setup() {
 
 void loop() {
     Environment::getEnvironment().loop();
-
 }
