@@ -5,14 +5,12 @@
 #include <environment/Environment.h>
 #include "IRController.h"
 
-IRController::IRController(IRSensor *irSensor) : irSensor(*irSensor),
-                                                 logger(LoggerFactory::newLogger("IRController")) {}
+IRController::IRController(IRSensor &irSensor) : irSensor(irSensor){}
 
 Command IRController::readControllerCommand() {
     IRCode code = irSensor.readCode();
 
     if (code == IRCode::FUNC_STOP) {
-        logger->newLine()->logAppend("Stop mode: ")->logAppend(Mode::getModeNameString(modeName));
         modeName = ModeName::NONE;
         return Command::STOP_MODE;
     }
@@ -29,8 +27,6 @@ Command IRController::readControllerCommand() {
                 break;
             case IRCode::NUMBER_5:
                 return selectCommand(SUPERVISED);
-            case IRCode::NUMBER_6:
-                return selectCommand(TEST);
             default:
                 break;
         }

@@ -7,6 +7,7 @@
 #include <sensors/USObstacleSensor.h>
 #include "time/ArduinoClock.h"
 #include "SerialLoggerFactory.h"
+#include "MarkIEnvironment.h"
 
 
 void setup() {
@@ -14,15 +15,14 @@ void setup() {
     Serial.begin(9600);
 
     LoggerFactory::setLoggerFactory(new SerialLoggerFactory);
-    auto *irSensor = new IRSensor;
-    Environment::getEnvironment().setClock(new ArduinoClock);
-    Environment::getEnvironment().setController(new IRController(irSensor));
-    Environment::getEnvironment().setMotorDriver(new DualMotorMovementDriver);
-    Environment::getEnvironment().setObstacleSensor(new USObstacleSensor);
-
+    SRAMMemoryMonitor memoryMonitor;
+    Environment::setEnvironment(*new MarkIEnvironment{});
     Environment::getEnvironment().init();
 
-    LoggerFactory::newLogger("Main")->newLine()->logAppend("App is started");
+     auto mainLogger = LoggerFactory::newLogger("Main");
+     mainLogger->newLine()->logAppend("App is started");
+
+    Serial.println(memoryMonitor.available());
 }
 
 void loop() {

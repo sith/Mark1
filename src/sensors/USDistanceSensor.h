@@ -15,9 +15,6 @@ static const int MAX_COURSE = 170;
 
 class USDistanceSensor {
 private:
-
-    Logger *logger;
-
     Servo servo;
     int currentCourse = COURSE_OFFSET;
     SR04 sr04 = SR04(DistanceModulePins::echo, DistanceModulePins::trig);

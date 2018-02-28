@@ -16,10 +16,9 @@
 #define SPEED_MODE_MEDIUM 128
 #define SPEED_MODE_FAST 250
 
+#include <drivers/MotorDriver.h>
 
 class DualMotorMovementDriver : public MotorDriver {
-
-    Logger *logger;
     Speed currentSpeed = Speed::NONE;
     Direction currentDirection = Direction::NONE;
 
@@ -31,7 +30,6 @@ class DualMotorMovementDriver : public MotorDriver {
 
     byte convertSpeedMode(const Speed &speed) const;
 
-    void logCommand(const Direction &direction) const;
 public:
     virtual ~DualMotorMovementDriver();
 

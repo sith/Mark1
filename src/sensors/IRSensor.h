@@ -39,7 +39,6 @@ enum class IRCode {
 class IRSensor {
 private:
     IRrecv irrecv;
-    Logger *logger;
     decode_results results;
 
     IRCode translateIR();

@@ -65,11 +65,9 @@ IRCode IRSensor::translateIR() {
     }
 }
 
-IRSensor::IRSensor() : irrecv(IRReceiverPins::y),
-                       logger(LoggerFactory::newLogger("IRSensor")) {
+IRSensor::IRSensor() : irrecv(IRReceiverPins::y){
     IRSensor::irrecv.enableIRIn();
 }
 
 IRSensor::~IRSensor() {
-    delete logger;
 }

@@ -3,7 +3,7 @@
 #include "DualMotorMovementDriver.h"
 #include "PinConfiguration.h"
 
-DualMotorMovementDriver::DualMotorMovementDriver() : logger(LoggerFactory::newLogger("MotorDriver")) {
+DualMotorMovementDriver::DualMotorMovementDriver() {
     pinMode(MotorShieldPins::motor1Enable, OUTPUT);
     pinMode(MotorShieldPins::motor1Input1, OUTPUT);
     pinMode(MotorShieldPins::motor1Input2, OUTPUT);
@@ -51,24 +51,6 @@ byte DualMotorMovementDriver::convertSpeedMode(const Speed &speed) const {
 }
 
 DualMotorMovementDriver::~DualMotorMovementDriver() {
-    delete logger;
-}
-
-void DualMotorMovementDriver::logCommand(const Direction &direction) const {
-    switch (direction) {
-        case Direction::FORWARD:
-            logger->newLine()->logAppend("go forward");
-            break;
-        case Direction::BACKWARD:
-            logger->newLine()->logAppend("go backward");
-            break;
-        case Direction::TURN_LEFT:
-            logger->newLine()->logAppend("go left");
-            break;
-        case Direction::TURN_RIGHT:
-            logger->newLine()->logAppend("go right");
-            break;
-    }
 }
 
 void DualMotorMovementDriver::leftWheel(Direction direction, Speed speedMode) {
@@ -133,13 +115,11 @@ void DualMotorMovementDriver::executeInternal(Direction direction, Speed speed) 
     currentDirection = direction;
     currentSpeed = speed;
 
-    logCommand(direction);
     leftWheel(direction, speed);
     rightWheel(direction, speed);
 }
 
 void DualMotorMovementDriver::stopInternal() {
-    logger->newLine()->logAppend("stop");
     currentSpeed = Speed::NONE;
     currentDirection = Direction::NONE;
     digitalWrite(MotorShieldPins::motor1Enable, SPEED_MODE_ZERO);

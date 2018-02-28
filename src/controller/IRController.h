@@ -11,11 +11,8 @@
 
 class IRController : public Controller {
     IRSensor irSensor;
-    Logger *logger;
-
 public:
-
-    IRController(IRSensor *irSensor);
+    IRController(IRSensor &irSensor);
 
     Command readControllerCommand() override;
 
