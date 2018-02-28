@@ -9,16 +9,12 @@ static const int MIN_COURSE = 10;
 static const int MAX_COURSE = 170;
 
 #include <Servo.h>
-#include "logger/Logger.h"
-#include "sensors/DistanceSensor.h"
+#include <logger/Logger.h>
 #include "SR04.h"
 #include "PinConfiguration.h"
 
-class USDistanceSensor : public DistanceSensor {
+class USDistanceSensor {
 private:
-
-    static Logger *LOG;
-
     Servo servo;
     int currentCourse = COURSE_OFFSET;
     SR04 sr04 = SR04(DistanceModulePins::echo, DistanceModulePins::trig);
@@ -30,7 +26,9 @@ private:
 public:
     USDistanceSensor();
 
-    long getDistance(int course) override;
+    virtual ~USDistanceSensor();
+
+    long getDistance(int course);
 };
 
 

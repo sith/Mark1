@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include "Logger.h"
+#include <environment/Environment.h>
+#include "logger/Logger.h"
 #include "SerialLogger.h"
 
 Logger *SerialLogger::logAppend(const int number) {
@@ -13,15 +14,19 @@ Logger *SerialLogger::logAppend(const char *c) {
 
 }
 
+Logger *SerialLogger::logAppend(long number) {
+    Serial.print(number);
+    return this;
+}
+
 Logger *SerialLogger::newLine() {
     Serial.println();
     Serial.print("#");
-    Serial.print(Logger::getCycle());
+    Serial.print(Environment::getEnvironment().getCycle().getCycle());
     Serial.print(":\t");
     Serial.print(name);
     Serial.print(":\t");
     return this;
 }
 
-
-SerialLogger::SerialLogger(char *name) : name(name) {}
+SerialLogger::SerialLogger(const char *name) : name(name) {}

@@ -2,9 +2,9 @@
 // Created by Oleksandra Baukh on 12/17/17.
 //
 
+#include <environment/Environment.h>
 #include "USDistanceSensor.h"
 
-Logger *USDistanceSensor::LOG = Logger::createLogger("USDistanceSensor");
 
 long USDistanceSensor::getDistance(int course) {
     int newCourse = calculateCourse(course);
@@ -19,12 +19,11 @@ long USDistanceSensor::getDistance(int course) {
 }
 
 USDistanceSensor::USDistanceSensor() {
+
     servo.attach(ServoMotorPins::pulse);
     servo.write(currentCourse);
     delay(250);
     standardDelay();
-    LOG->newLine()->logAppend("Servo motor is reset");
-
 }
 
 void USDistanceSensor::standardDelay() const { delay(250); }
@@ -38,5 +37,8 @@ int USDistanceSensor::calculateCourse(int course) {
         return MIN_COURSE;
     }
     return newCourse;
+}
+
+USDistanceSensor::~USDistanceSensor() {
 }
 

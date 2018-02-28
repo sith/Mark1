@@ -1,21 +1,31 @@
 #include <Arduino.h>
-#include "ModeManager.h"
-#include "IRModeManager.h"
-#include "drivers/DualMotorMovementDriver.h"
-#include "sensors/USDistanceSensor.h"
 
-ModeManager *modeManager;
+#include <logger/Logger.h>
+#include <environment/Environment.h>
+#include <controller/IRController.h>
+#include <drivers/DualMotorMovementDriver.h>
+#include <sensors/USObstacleSensor.h>
+#include "time/ArduinoClock.h"
+#include "SerialLoggerFactory.h"
+#include "MarkIEnvironment.h"
+
 
 void setup() {
+
     Serial.begin(9600);
-    IRSensor sensor;
-    DistanceSensor *distanceDriver = new USDistanceSensor();
-    MovementDriver *movementDriver = new DualMotorMovementDriver();
-    modeManager = new IRModeManager(sensor, distanceDriver, movementDriver);
+
+    LoggerFactory::setLoggerFactory(new SerialLoggerFactory);
+    SRAMMemoryMonitor memoryMonitor;
+    Environment::setEnvironment(*new MarkIEnvironment{});
+    Environment::getEnvironment().init();
+
+     auto mainLogger = LoggerFactory::newLogger("Main");
+     mainLogger->newLine()->logAppend("App is started");
+
+    Serial.println(memoryMonitor.available());
 }
 
 void loop() {
-    Logger::nextCycle();
-    Mode *mode = modeManager->getMode();
-    mode->process();
+    Environment::getEnvironment().loop();
+
 }

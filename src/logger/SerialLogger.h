@@ -7,7 +7,7 @@
 
 
 #include <HardwareSerial.h>
-#include "Logger.h"
+#include <logger/Logger.h>
 
 
 class SerialLogger : public Logger {
@@ -15,9 +15,11 @@ private:
     const char *name;
 public:
 
-    SerialLogger(char *name);
+    SerialLogger(const char *name);
 
-    Logger *logAppend(const int number) override;
+    Logger *logAppend(int number) override;
+
+    Logger *logAppend(long number) override;
 
     Logger *logAppend(const char *c) override;
 
