@@ -66,4 +66,10 @@ public:
 };
 
 
+struct SDPins {
+public:
+    static const byte cs = D19_ANALOG;
+};
+
+
 #endif //MARK1_byteCONFIGURATION_H

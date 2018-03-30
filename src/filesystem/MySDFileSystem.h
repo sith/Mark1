@@ -7,10 +7,9 @@
 
 #include <filesystem/FileSystem.h>
 
-class SDFileSystem : public FileSystem{
-    virtual Pointer <File> openFile(const char *path);
 
-    Pointer<List<Pointer<File>>> listFiles() override;
+class MySDFileSystem : public mark_os::filesystem::FileSystem {
+    virtual Pointer<mark_os::filesystem::File> openFile(const char *path);
 
     virtual void deleteFile(const char *path);
 

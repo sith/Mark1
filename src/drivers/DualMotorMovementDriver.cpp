@@ -112,6 +112,12 @@ void DualMotorMovementDriver::executeInternal(Direction direction, Speed speed) 
         return;
     }
 
+    if (direction == Direction::NONE || speed == Speed::NONE) {
+        stop();
+    }
+
+    Serial.println("Move");
+
     currentDirection = direction;
     currentSpeed = speed;
 
@@ -120,6 +126,8 @@ void DualMotorMovementDriver::executeInternal(Direction direction, Speed speed) 
 }
 
 void DualMotorMovementDriver::stopInternal() {
+    Serial.println("Stop");
+
     currentSpeed = Speed::NONE;
     currentDirection = Direction::NONE;
     digitalWrite(MotorShieldPins::motor1Enable, SPEED_MODE_ZERO);

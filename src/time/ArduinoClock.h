@@ -6,7 +6,7 @@
 #define MARK1_ARDUINOCLOCK_H
 
 
-#include <time/Clock.h>
+#include <Clock.h>
 
 class ArduinoClock : public Clock {
 public:

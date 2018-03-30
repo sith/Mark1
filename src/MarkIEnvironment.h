@@ -7,29 +7,32 @@
 
 
 #include <memory/SRAMMemoryMonitor.h>
-#include <controller/IRController.h>
+#include <controller/RemoteController.h>
 #include <drivers/DualMotorMovementDriver.h>
 #include <sensors/USObstacleSensor.h>
 #include <time/ArduinoClock.h>
 #include <environment/Environment.h>
-#include <filesystem/SDFileSystem.h>
+#include <filesystem/MySDFileSystem.h>
+#include <missions/InMemoryMissionManager.h>
+#include <TR433.h>
 
 class MarkIEnvironment : public Environment {
     ModeManager modeManager;
-    Cycle cycle;
+    mark_os::cycle::Cycle cycle;
     SRAMMemoryMonitor memoryMonitor;
-    IRSensor irSensor;
-    IRController controller{irSensor};
+    TR433<mark_os::controller::ControllerState> receiver;
+    RemoteController controller{receiver};
+
     DualMotorMovementDriver motorDriver;
     USObstacleSensor obstacleSensor;
     ArduinoClock clock;
-    SDFileSystem fileSystem;
+    MySDFileSystem fileSystem;
     Timer timer{&clock};
-
+    InMemoryMissionManager eventBasedMissionManager{motorDriver, timer, clock};
 public:
     virtual ModeManager &getModeManager();
 
-    virtual Cycle &getCycle();
+    virtual mark_os::cycle::Cycle &getCycle();
 
     virtual Timer &getTimer();
 
@@ -41,9 +44,11 @@ public:
 
     virtual ObstacleSensor &getObstacleSensor();
 
-    virtual FileSystem &getFileSystem();
+    virtual mark_os::filesystem::FileSystem &getFileSystem();
 
     virtual MemoryMonitor &getMemoryMonitor();
+
+    MissionManager &getMissionManager() override;
 };
 
 

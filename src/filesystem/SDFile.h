@@ -7,7 +7,8 @@
 
 #include <filesystem/File.h>
 
-class SDFile : public File {
+
+class SDFile : public mark_os::filesystem::File {
 public:
     virtual int readInt();
 

@@ -1,14 +1,10 @@
-//
-// Created by Oleksandra Baukh on 2/26/18.
-//
-
 #include "MarkIEnvironment.h"
 
 ModeManager &MarkIEnvironment::getModeManager() {
     return modeManager;
 }
 
-Cycle &MarkIEnvironment::getCycle() {
+mark_os::cycle::Cycle &MarkIEnvironment::getCycle() {
     return cycle;
 }
 
@@ -32,10 +28,14 @@ ObstacleSensor &MarkIEnvironment::getObstacleSensor() {
     return obstacleSensor;
 }
 
-FileSystem &MarkIEnvironment::getFileSystem() {
+mark_os::filesystem::FileSystem &MarkIEnvironment::getFileSystem() {
     return fileSystem;
 }
 
 MemoryMonitor &MarkIEnvironment::getMemoryMonitor() {
     return memoryMonitor;
+}
+
+MissionManager &MarkIEnvironment::getMissionManager() {
+    return eventBasedMissionManager;
 }
