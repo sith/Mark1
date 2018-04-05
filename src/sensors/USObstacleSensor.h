@@ -13,7 +13,7 @@
 
 class USObstacleSensor : public ObstacleSensor {
     SR04 sr04{DistanceModulePins::echo, DistanceModulePins::trig};
-    const long allowedDistanceToObstacle = 10;
+    const long allowedDistanceToObstacle = 15;
 public:
     Obstacle read() override;
 

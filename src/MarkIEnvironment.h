@@ -15,6 +15,8 @@
 #include <filesystem/MySDFileSystem.h>
 #include <missions/InMemoryMissionManager.h>
 #include <TR433.h>
+#include <TR433.cpp>
+#include <sensors/IRObstacleSensor.h>
 
 class MarkIEnvironment : public Environment {
     ModeManager modeManager;
@@ -24,7 +26,8 @@ class MarkIEnvironment : public Environment {
     RemoteController controller{receiver};
 
     DualMotorMovementDriver motorDriver;
-    USObstacleSensor obstacleSensor;
+//    USObstacleSensor obstacleSensor;
+    IRObstacleSensor obstacleSensor;
     ArduinoClock clock;
     MySDFileSystem fileSystem;
     Timer timer{&clock};
