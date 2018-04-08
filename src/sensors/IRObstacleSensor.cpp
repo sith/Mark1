@@ -10,7 +10,7 @@ Obstacle IRObstacleSensor::read() {
     Obstacle obstacle{};
     obstacle.left = digitalRead(leftSensorPin) == LOW;
     obstacle.forward = digitalRead(forwardSensorPin) == LOW;
-    obstacle.right = digitalRead(leftSensorPin) == LOW;
+    obstacle.right = digitalRead(rightSensorPin) == LOW;
     return obstacle;
 }
 
